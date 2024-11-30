@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="4dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <RelativeLayout
+            android:id="@+id/nameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            >
+
+            <ImageView
+                android:id="@+id/img_person"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/icon_person"
+                android:layout_centerVertical="true"
+
+                />
+
+            <TextView
+                android:id="@+id/textFullName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:layout_toEndOf="@+id/img_person"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:text="John Doe" />
+
+            <TextView
+                android:id="@+id/textUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:layout_toEndOf="@id/textFullName"
+                android:text="johndoe123"
+                android:ellipsize="end"
+                android:maxLines="1"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/mailLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nameLayout"
+            android:layout_marginBottom="5dp"
+            >
+
+            <ImageView
+                android:id="@+id/img_mail"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/icon_mail"
+                android:layout_centerVertical="true"
+                />
+
+            <TextView
+                android:id="@+id/textTrEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_toEndOf="@+id/img_mail"
+                android:layout_centerVertical="true"
+                android:text="john.doe@example.com"
+                android:ellipsize="end"
+                android:maxLines="1"
+
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/transactionAmountLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/mailLayout"
+            android:layout_marginBottom="5dp">
+
+
+
+
+            <ImageView
+                android:id="@+id/img_amount"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/icon_dollar"
+                android:layout_centerVertical="true"
+                />
+
+            <TextView
+                android:id="@+id/textTrAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/img_amount"
+                android:text="25,000"
+                android:ellipsize="end"
+                android:maxLines="1"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(bKash)"
+                android:layout_toEndOf="@id/textTrAmount"
+                android:layout_marginStart="2dp"
+                android:layout_centerVertical="true"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/transactionIdLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/transactionAmountLayout"
+            android:layout_marginBottom="5dp">
+
+            <ImageView
+                android:id="@+id/img_payment"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/icon_payment"
+                android:layout_centerVertical="true"
+                />
+
+            <TextView
+                android:id="@+id/textTrPayment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/img_payment"
+                android:text="A5DS2GTR9"
+                android:ellipsize="end"
+                android:maxLines="1"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/transactionTimeLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/transactionIdLayout"
+            android:layout_marginBottom="5dp">
+
+            <ImageView
+                android:id="@+id/img_time"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/icon_time"
+                android:layout_centerVertical="true"
+                />
+
+            <TextView
+                android:id="@+id/textTrTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/img_time"
+                android:text="Mar 24, 2024 13:20"
+                android:ellipsize="end"
+                android:maxLines="1"
+                />
+        </RelativeLayout>
+
+
+
+
+
+    </RelativeLayout>
+</com.google.android.material.card.MaterialCardView>
