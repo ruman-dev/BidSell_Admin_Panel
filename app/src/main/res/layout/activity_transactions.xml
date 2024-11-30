@@ -11,7 +11,7 @@
         android:id="@+id/toolbarTrans"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        app:title="Manage Users"
+        app:title="Manage Transactions"
         android:background="@color/brightBlue"
         app:titleTextColor="@color/white"
         app:navigationIcon="@drawable/icon_back"

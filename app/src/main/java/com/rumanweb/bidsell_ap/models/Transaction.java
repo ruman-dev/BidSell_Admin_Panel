@@ -1,16 +1,18 @@
 package com.rumanweb.bidsell_ap.models;
 
+import java.util.Date;
+
 public class Transaction {
-    private String fullName;
-    private String userName;
-    private String email;
-    private double amount;
-    private String paymentMethod;
-    private String transactionId;
-    private String transactionTime;
+    private final String fullName;
+    private final String userName;
+    private final String email;
+    private final double amount;
+    private final String paymentMethod;
+    private final String transactionId;
+    private final Date transactionTime;
 
     public Transaction(String fullName, String userName, String email, double amount,
-                       String paymentMethod, String transactionId, String transactionTime) {
+                       String paymentMethod, String transactionId, Date transactionTime) {
         this.fullName = fullName;
         this.userName = userName;
         this.email = email;
@@ -27,5 +29,5 @@ public class Transaction {
     public double getAmount() { return amount; }
     public String getPaymentMethod() { return paymentMethod; }
     public String getTransactionId() { return transactionId; }
-    public String getTransactionTime() { return transactionTime; }
+    public Date getTransactionTime() { return transactionTime; }
 }

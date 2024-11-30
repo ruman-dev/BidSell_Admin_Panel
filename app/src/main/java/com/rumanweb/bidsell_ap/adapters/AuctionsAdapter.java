@@ -40,19 +40,19 @@ public class AuctionsAdapter extends RecyclerView.Adapter<AuctionsAdapter.Auctio
     public void onBindViewHolder(@NonNull AuctionViewHolder holder, int position) {
         Auctions auction = auctionList.get(position);
 
-        holder.tvAuctionName.setText(auction.getAuctionName());
+        holder.tvAuctionName.setText(auction.getTitle());
         holder.tvStartingPrice.setText(currencyFormat.format(auction.getStartingPrice()));
 
         try {
-            Date startTime = inputFormat.parse(auction.getStartTime());
-            Date endTime = inputFormat.parse(auction.getEndTime());
+            Date startTime = inputFormat.parse(auction.getOpenDate().toString());
+            Date endTime = inputFormat.parse(auction.getCloseDate().toString());
 
             holder.tvStartTime.setText(outputFormat.format(startTime));
             holder.tvEndTime.setText(outputFormat.format(endTime));
         } catch (ParseException e) {
             e.printStackTrace();
-            holder.tvStartTime.setText(auction.getStartTime());
-            holder.tvEndTime.setText(auction.getEndTime());
+            holder.tvStartTime.setText(auction.getOpenDate().toString());
+            holder.tvEndTime.setText(auction.getCloseDate().toString());
         }
     }
 

@@ -3,6 +3,8 @@ package com.rumanweb.bidsell_ap.activities;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,12 +12,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.rumanweb.bidsell_ap.R;
 import com.rumanweb.bidsell_ap.adapters.AuctionsAdapter;
 import com.rumanweb.bidsell_ap.models.Auctions;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class AuctionsActivity extends AppCompatActivity {
     private RecyclerView recyclerViewAuctions;
@@ -23,6 +31,8 @@ public class AuctionsActivity extends AppCompatActivity {
     private List<Auctions> auctionList;
     private List<Auctions> filteredAuctionList;
     private TextInputEditText edAuctions;
+    private FirebaseFirestore db;
+    private SimpleDateFormat displayDateFormat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,19 +47,26 @@ public class AuctionsActivity extends AppCompatActivity {
         recyclerViewAuctions = findViewById(R.id.auctionsRecyclerView);
         recyclerViewAuctions.setLayoutManager(new LinearLayoutManager(this));
 
-        // Populate Auction List (You'll replace this with actual data from your database)
-        auctionList = generateSampleAuctions();
-        filteredAuctionList = new ArrayList<>(auctionList);
+        db = FirebaseFirestore.getInstance();
+
+        auctionList = new ArrayList<>();
+        filteredAuctionList = new ArrayList<>();
 
         // Setup Adapter
         auctionsAdapter = new AuctionsAdapter(filteredAuctionList);
         recyclerViewAuctions.setAdapter(auctionsAdapter);
 
+        retrieveAuctions();
+
+        // Adjust the date format to match your needs
+        displayDateFormat = new SimpleDateFormat("MMM dd, yyyy hh:mm a", Locale.getDefault());
+
         // Search EditText
         edAuctions = findViewById(R.id.edSearchAuctions);
         edAuctions.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -57,7 +74,8 @@ public class AuctionsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
     }
 
@@ -71,49 +89,43 @@ public class AuctionsActivity extends AppCompatActivity {
             String searchTextLower = searchText.toLowerCase();
             for (Auctions auction : auctionList) {
                 // Check if auction name contains search text
-                if (auction.getAuctionName().toLowerCase().contains(searchTextLower)) {
+                if (auction.getTitle().toLowerCase().contains(searchTextLower)) {
                     filteredAuctionList.add(auction);
                 }
             }
         }
-
         auctionsAdapter.notifyDataSetChanged();
     }
 
-    // Sample method to generate auctions - replace with actual data retrieval
-    private List<Auctions> generateSampleAuctions() {
-        List<Auctions> auctions = new ArrayList<>();
-        auctions.add(new Auctions(
-                "Maryland Grand Estate Decor Auction",
-                45000,
-                "2024-10-24 10:25:00",
-                "2024-12-24 21:41:00"
-        ));
-        auctions.add(new Auctions(
-                "Vintage Jewelry Collectors Auction",
-                65000,
-                "2024-11-15 14:30:00",
-                "2025-01-20 18:00:00"
-        ));
-        auctions.add(new Auctions(
-                "Classic Car Auction Extravaganza",
-                120000,
-                "2024-09-05 09:00:00",
-                "2024-11-10 16:45:00"
-        ));
+    private void retrieveAuctions() {
+        db.collection("ProductList").get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                auctionList.clear();
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    String title = document.getString("title");
+                    String description = document.getString("description");
+                    String highlights = document.getString("highlights");
+                    String imgUrl = document.getString("img_url");
+                    long listingNo = document.getLong("listing_no");
+                    long bidCount = document.getLong("bid_count");
+                    Date openDate = document.getDate("open_date");
+                    Date closeDate = document.getDate("close_date");
+                    long quantity = document.getLong("quantity");
+                    double startingPrice = document.getDouble("starting_price");
 
-        auctions.add(new Auctions(
-                "Classic Car Auction Extravaganza",
-                120000,
-                "2024-09-05 09:00:00",
-                "2024-11-10 16:45:00"
-        ));
-        auctions.add(new Auctions(
-                "Classic Car Auction Extravaganza",
-                120000,
-                "2024-09-05 09:00:00",
-                "2024-11-10 16:45:00"
-        ));
-        return auctions;
+                    String formattedOpenDate = displayDateFormat.format(openDate);
+                    String formattedCloseDate = displayDateFormat.format(closeDate);
+
+
+                    Auctions auctions = new Auctions(
+                            title, description, highlights, imgUrl, bidCount, listingNo, quantity, startingPrice, formattedOpenDate, formattedCloseDate);
+                    auctionList.add(auctions);
+                }
+                filteredAuctionList.addAll(auctionList);
+                auctionsAdapter.notifyDataSetChanged();
+            } else {
+                Toast.makeText(getApplicationContext(), "Error fetching auctions!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

@@ -21,7 +21,7 @@ import java.util.Locale;
 public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapter.TransactionViewHolder> {
     private List<Transaction> transactionList;
     private SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
-    private SimpleDateFormat outputFormat = new SimpleDateFormat("MMM dd, yyyy HH:mm", Locale.US);
+    private SimpleDateFormat outputFormat = new SimpleDateFormat("MMM dd, yyyy HH:mm a", Locale.US);
     private NumberFormat currencyFormat = NumberFormat.getNumberInstance(Locale.US);
 
     public TransactionsAdapter(List<Transaction> transactionList) {
@@ -47,18 +47,14 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
 
         // Set transaction amount with formatting
         holder.textAmount.setText(currencyFormat.format(transaction.getAmount()));
+        holder.textPaymentMethod.setText("("+transaction.getPaymentMethod()+")");
 
         // Set transaction ID
         holder.textPayment.setText(transaction.getTransactionId());
 
         // Set formatted transaction time
-        try {
-            Date transactionTime = inputFormat.parse(transaction.getTransactionTime());
-            holder.textTime.setText(outputFormat.format(transactionTime));
-        } catch (ParseException e) {
-            e.printStackTrace();
-            holder.textTime.setText(transaction.getTransactionTime());
-        }
+        Date transactionTime = transaction.getTransactionTime();
+        holder.textTime.setText(outputFormat.format(transactionTime));
     }
 
     @Override
@@ -67,7 +63,7 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
     }
 
     static class TransactionViewHolder extends RecyclerView.ViewHolder {
-        TextView textFullName, textUserName, textEmail, textAmount, textPayment, textTime;
+        TextView textFullName, textUserName, textEmail, textAmount, textPayment, textTime, textPaymentMethod;
 
         public TransactionViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -77,6 +73,7 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
             textAmount = itemView.findViewById(R.id.textTrAmount);
             textPayment = itemView.findViewById(R.id.textTrPayment);
             textTime = itemView.findViewById(R.id.textTrTime);
+            textPaymentMethod = itemView.findViewById(R.id.textPaymentMethod);
         }
     }
 }

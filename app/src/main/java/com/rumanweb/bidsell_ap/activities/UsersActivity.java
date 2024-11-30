@@ -1,16 +1,20 @@
 package com.rumanweb.bidsell_ap.activities;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.rumanweb.bidsell_ap.R;
 import com.rumanweb.bidsell_ap.adapters.UsersAdapter;
 import com.rumanweb.bidsell_ap.models.Users;
@@ -25,6 +29,9 @@ public class UsersActivity extends AppCompatActivity {
     private List<Users> filteredUserList;
     private TextInputEditText searchEditText;
 
+    // Firestore instance
+    private FirebaseFirestore firestore;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,13 +45,19 @@ public class UsersActivity extends AppCompatActivity {
         recyclerViewUsers = findViewById(R.id.usersRecyclerView);
         recyclerViewUsers.setLayoutManager(new LinearLayoutManager(this));
 
-        // Populate User List (You'll replace this with actual data from your database)
-        userList = generateSampleUsers();
-        filteredUserList = new ArrayList<>(userList);
+        // Initialize Firestore
+        firestore = FirebaseFirestore.getInstance();
+
+        // Initialize lists
+        userList = new ArrayList<>();
+        filteredUserList = new ArrayList<>();
 
         // Setup Adapter
         usersAdapter = new UsersAdapter(filteredUserList);
         recyclerViewUsers.setAdapter(usersAdapter);
+
+        // Retrieve data from Firestore
+        fetchUsersFromFirestore();
 
         // Search EditText
         searchEditText = findViewById(R.id.edSearchUsers);
@@ -62,6 +75,28 @@ public class UsersActivity extends AppCompatActivity {
         });
     }
 
+    // Fetch users from Firestore
+    private void fetchUsersFromFirestore() {
+        firestore.collection("users").get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                userList.clear();
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    String fullName = document.getString("fullName");
+                    String userName = document.getString("userName");
+                    String email = document.getString("email");
+                    String mobile = document.getString("mobile");
+
+                    Users user = new Users(fullName, userName, email, mobile);
+                    userList.add(user);
+                }
+                filteredUserList.addAll(userList);
+                usersAdapter.notifyDataSetChanged();
+            } else {
+                Log.e("FirestoreError", "Error fetching users", task.getException());
+            }
+        });
+    }
+
     // Filter users based on username or full name
     private void filterUsers(String searchText) {
         filteredUserList.clear();
@@ -71,7 +106,6 @@ public class UsersActivity extends AppCompatActivity {
         } else {
             String searchTextLower = searchText.toLowerCase();
             for (Users user : userList) {
-                // Check if username or full name contains search text
                 if (user.getUserName().toLowerCase().contains(searchTextLower) ||
                         user.getFullName().toLowerCase().contains(searchTextLower)) {
                     filteredUserList.add(user);
@@ -80,17 +114,5 @@ public class UsersActivity extends AppCompatActivity {
         }
 
         usersAdapter.notifyDataSetChanged();
-    }
-
-    // Sample method to generate users - replace with actual data retrieval
-    private List<Users> generateSampleUsers() {
-        List<Users> users = new ArrayList<>();
-        users.add(new Users("John Doe", "johndoe123", "john.doe@example.com", "+1 (555) 123-4567"));
-        users.add(new Users("Jane Smith", "janesmith456", "jane.smith@example.com", "+1 (555) 987-6543", "Premium User"));
-        users.add(new Users("Mike Johnson", "mikej", "mike.johnson@example.com", "+1 (555) 246-8135", "New User"));
-        users.add(new Users("Alice Williams", "alicew", "alice.williams@example.com", "+1 (555) 369-2580"));
-        users.add(new Users("Md. Ruman", "rumancse", "ruman.cse@example.com", "+8801994-385596"));
-        users.add(new Users("Alduddin Al Hasan", "hasanal", "hasan.alauddin@example.com", "01700533952", "New User"));
-        return users;
     }
 }

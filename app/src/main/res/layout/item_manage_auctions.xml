@@ -112,7 +112,7 @@
                 android:id="@+id/img_endTime"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/icon_start" />
+                android:src="@drawable/icon_stop" />
 
             <TextView
                 android:id="@+id/tvEndTime"
