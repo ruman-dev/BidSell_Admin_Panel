@@ -12,8 +12,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.rumanweb.bidsell_ap.R;
 import com.rumanweb.bidsell_ap.models.AuctionRequest;
+
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,8 +26,7 @@ import java.util.Objects;
 
 public class AuctionRequestAdapter extends RecyclerView.Adapter<AuctionRequestAdapter.RequestViewHolder> {
     private List<AuctionRequest> requestList;
-//    private SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
-    private SimpleDateFormat outputFormat = new SimpleDateFormat("MMM dd, yyyy HH:mm", Locale.US);
+    private SimpleDateFormat outputFormat = new SimpleDateFormat("MMM dd, yyyy HH:mm a", Locale.US);
     private NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US);
 
     public AuctionRequestAdapter(List<AuctionRequest> requestList) {
@@ -47,11 +48,8 @@ public class AuctionRequestAdapter extends RecyclerView.Adapter<AuctionRequestAd
         holder.tvRequestName.setText(request.getAuctionTitle());
         holder.tvRequestedPrice.setText(currencyFormat.format(request.getStartingPriceReq()));
         holder.tvStatus.setText(request.getStatus());
-        Date requestDate = request.getOpeningDate();
-        Date expectedEndDate = request.getExpectedEndDate();
-
-        holder.tvRequestDate.setText(outputFormat.format(requestDate));
-        holder.tvExpectedEndDate.setText(outputFormat.format(expectedEndDate));
+        holder.tvRequestDate.setText(outputFormat.format(request.getOpeningDate()));
+        holder.tvExpectedEndDate.setText(outputFormat.format(request.getExpectedEndDate()));
 
         holder.itemView.setOnClickListener(v -> showDetailsDialog(v.getContext(), request));
     }
@@ -61,18 +59,6 @@ public class AuctionRequestAdapter extends RecyclerView.Adapter<AuctionRequestAd
         return requestList.size();
     }
 
-    static class RequestViewHolder extends RecyclerView.ViewHolder {
-        TextView tvRequestName, tvRequestedPrice, tvRequestDate, tvExpectedEndDate, tvStatus;
-
-        public RequestViewHolder(@NonNull View itemView) {
-            super(itemView);
-            tvRequestName = itemView.findViewById(R.id.tvAuctionName);
-            tvRequestedPrice = itemView.findViewById(R.id.tvStartingPrice);
-            tvRequestDate = itemView.findViewById(R.id.tvStartTime);
-            tvExpectedEndDate = itemView.findViewById(R.id.tvEndTime);
-            tvStatus = itemView.findViewById(R.id.tvStatus);
-        }
-    }
     private void showDetailsDialog(Context context, AuctionRequest request) {
         Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -116,5 +102,18 @@ public class AuctionRequestAdapter extends RecyclerView.Adapter<AuctionRequestAd
         });
 
         dialog.show();
+    }
+
+    static class RequestViewHolder extends RecyclerView.ViewHolder {
+        TextView tvRequestName, tvRequestedPrice, tvRequestDate, tvExpectedEndDate, tvStatus;
+
+        public RequestViewHolder(@NonNull View itemView) {
+            super(itemView);
+            tvRequestName = itemView.findViewById(R.id.tvAuctionName);
+            tvRequestedPrice = itemView.findViewById(R.id.tvStartingPrice);
+            tvRequestDate = itemView.findViewById(R.id.tvStartTime);
+            tvExpectedEndDate = itemView.findViewById(R.id.tvEndTime);
+            tvStatus = itemView.findViewById(R.id.tvStatus);
+        }
     }
 }

@@ -5,10 +5,10 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.BidPlacedActivity">
+    tools:context=".activities.AuctionsActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbarBidPlaced"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:title="Manage Bids"
@@ -17,5 +17,29 @@
         app:navigationIcon="@drawable/icon_back"
         app:navigationIconTint="@color/white"
         />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/searchLayoutPlaceBid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbarBidPlaced"
+        android:padding="16dp"
+        app:startIconDrawable="@drawable/icon_search">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edSearchPlaceBid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Search by Name or Username"
+            android:inputType="text"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/placeBidRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/searchLayoutPlaceBid"
+        android:padding="16dp"
+        android:clipToPadding="false"/>
 
 </RelativeLayout>

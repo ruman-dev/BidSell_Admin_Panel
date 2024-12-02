@@ -5,13 +5,14 @@ import com.google.firebase.Timestamp;
 import java.util.Date;
 
 public class Auctions {
-    private String title, description, highlights, imgUrl, openDate, closeDate;
+    private String title, description, highlights, imgUrl;
+    private Date openDate, closeDate;
 
     private long bidCount, listingNo, quantity;
 
     private double startingPrice;
 
-    public Auctions(String title, String description, String highlights, String imgUrl, long bidCount, long listingNo, long quantity, double startingPrice, String openDate, String closeDate) {
+    public Auctions(String title, String description, String highlights, String imgUrl, long bidCount, long listingNo, long quantity, double startingPrice, Date openDate, Date closeDate) {
         this.title = title;
         this.description = description;
         this.highlights = highlights;
@@ -88,19 +89,19 @@ public class Auctions {
         this.startingPrice = startingPrice;
     }
 
-    public String getOpenDate() {
+    public Date getOpenDate() {
         return openDate;
     }
 
-    public void setOpenDate(String openDate) {
+    public void setOpenDate(Date openDate) {
         this.openDate = openDate;
     }
 
-    public String getCloseDate() {
+    public Date getCloseDate() {
         return closeDate;
     }
 
-    public void setCloseDate(String  closeDate) {
+    public void setCloseDate(Date closeDate) {
         this.closeDate = closeDate;
     }
 }

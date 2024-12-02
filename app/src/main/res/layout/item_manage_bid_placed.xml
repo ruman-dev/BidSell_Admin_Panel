@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="4dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <RelativeLayout
+            android:id="@+id/auctionTitleLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:id="@+id/tvAuctionTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="A fully customizable table (100 pc)"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/userInfoLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/auctionTitleLayout"
+            android:layout_marginBottom="5dp">
+
+            <ImageView
+                android:id="@+id/img_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/icon_mail" />
+
+            <TextView
+                android:id="@+id/tvUserEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_toEndOf="@+id/img_price"
+                android:text="ruman.uits@gmail.com"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/biddingAmountLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/userInfoLayout"
+            android:layout_marginBottom="5dp">
+
+            <ImageView
+                android:id="@+id/img_biddingAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_dollar" />
+
+            <TextView
+                android:id="@+id/tvBiddingAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_toEndOf="@+id/img_biddingAmount"
+                android:ellipsize="end"
+                android:maxLines="1"
+                tools:text="10,000" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/biddingTimeLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/biddingAmountLayout"
+            android:layout_marginBottom="5dp">
+
+            <ImageView
+                android:id="@+id/img_biddingTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_time" />
+
+            <TextView
+                android:id="@+id/tvBiddingTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_toEndOf="@+id/img_biddingTime"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Oct 24, 2024 10:25" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/statusLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/biddingTimeLayout"
+            android:layout_marginBottom="5dp">
+
+            <ImageView
+                android:id="@+id/img_listingNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_check" />
+
+            <TextView
+                android:id="@+id/tvListingNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_toEndOf="@+id/img_listingNo"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="23462872374"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle" />
+        </RelativeLayout>
+    </RelativeLayout>
+</com.google.android.material.card.MaterialCardView>

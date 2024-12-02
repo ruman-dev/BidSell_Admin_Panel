@@ -20,8 +20,7 @@ import java.util.Locale;
 
 public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapter.TransactionViewHolder> {
     private List<Transaction> transactionList;
-    private SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
-    private SimpleDateFormat outputFormat = new SimpleDateFormat("MMM dd, yyyy HH:mm a", Locale.US);
+    private SimpleDateFormat outputFormat = new SimpleDateFormat("MMM dd, yyyy HH:mm", Locale.US);
     private NumberFormat currencyFormat = NumberFormat.getNumberInstance(Locale.US);
 
     public TransactionsAdapter(List<Transaction> transactionList) {
@@ -47,7 +46,7 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
 
         // Set transaction amount with formatting
         holder.textAmount.setText(currencyFormat.format(transaction.getAmount()));
-        holder.textPaymentMethod.setText("("+transaction.getPaymentMethod()+")");
+        holder.textPaymentMethod.setText("(" + transaction.getPaymentMethod() + ")");
 
         // Set transaction ID
         holder.textPayment.setText(transaction.getTransactionId());

@@ -20,7 +20,6 @@ import java.util.Locale;
 
 public class AuctionsAdapter extends RecyclerView.Adapter<AuctionsAdapter.AuctionViewHolder> {
     private List<Auctions> auctionList;
-    private SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
     private SimpleDateFormat outputFormat = new SimpleDateFormat("MMM dd, yyyy HH:mm", Locale.US);
     private NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US);
 
@@ -42,18 +41,8 @@ public class AuctionsAdapter extends RecyclerView.Adapter<AuctionsAdapter.Auctio
 
         holder.tvAuctionName.setText(auction.getTitle());
         holder.tvStartingPrice.setText(currencyFormat.format(auction.getStartingPrice()));
-
-        try {
-            Date startTime = inputFormat.parse(auction.getOpenDate().toString());
-            Date endTime = inputFormat.parse(auction.getCloseDate().toString());
-
-            holder.tvStartTime.setText(outputFormat.format(startTime));
-            holder.tvEndTime.setText(outputFormat.format(endTime));
-        } catch (ParseException e) {
-            e.printStackTrace();
-            holder.tvStartTime.setText(auction.getOpenDate().toString());
-            holder.tvEndTime.setText(auction.getCloseDate().toString());
-        }
+        holder.tvStartTime.setText(outputFormat.format(auction.getOpenDate()));
+        holder.tvEndTime.setText(outputFormat.format(auction.getCloseDate()));
     }
 
     @Override

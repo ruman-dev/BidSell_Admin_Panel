@@ -59,7 +59,7 @@ public class AuctionsActivity extends AppCompatActivity {
         retrieveAuctions();
 
         // Adjust the date format to match your needs
-        displayDateFormat = new SimpleDateFormat("MMM dd, yyyy hh:mm a", Locale.getDefault());
+        displayDateFormat = new SimpleDateFormat("MMM dd, yyyy hh:mm a", Locale.US);
 
         // Search EditText
         edAuctions = findViewById(R.id.edSearchAuctions);
@@ -113,12 +113,8 @@ public class AuctionsActivity extends AppCompatActivity {
                     long quantity = document.getLong("quantity");
                     double startingPrice = document.getDouble("starting_price");
 
-                    String formattedOpenDate = displayDateFormat.format(openDate);
-                    String formattedCloseDate = displayDateFormat.format(closeDate);
-
-
                     Auctions auctions = new Auctions(
-                            title, description, highlights, imgUrl, bidCount, listingNo, quantity, startingPrice, formattedOpenDate, formattedCloseDate);
+                            title, description, highlights, imgUrl, bidCount, listingNo, quantity, startingPrice, openDate, closeDate);
                     auctionList.add(auctions);
                 }
                 filteredAuctionList.addAll(auctionList);
